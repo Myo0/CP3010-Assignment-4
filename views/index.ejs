@@ -1,0 +1,46 @@
+<%- include('partials/header', { title: 'Home' }) %>
+
+<div class="container">
+  <div class="page-header">
+    <h1>Message Board</h1>
+    <% if (!user) { %>
+      <p class="notice">
+        <a href="/sign-up">Sign up</a> or <a href="/log-in">log in</a> to post messages.
+        Members can see who wrote each one.
+      </p>
+    <% } else if (!user.is_member) { %>
+      <p class="notice">
+        <a href="/join">Join the club</a> to see who posted each message.
+      </p>
+    <% } %>
+  </div>
+
+  <% if (messages.length === 0) { %>
+    <p class="empty">No messages yet — be the first to post!</p>
+  <% } else { %>
+    <div class="message-list">
+      <% messages.forEach(msg => { %>
+        <div class="message-card">
+          <h2 class="msg-title"><%= msg.title %></h2>
+          <p class="msg-text"><%= msg.text %></p>
+          <div class="msg-footer">
+            <% if (user && user.is_member) { %>
+              <span>— <%= msg.first_name %> <%= msg.last_name %></span>
+              <span><%= new Date(msg.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></span>
+            <% } else { %>
+              <span class="anon">— anonymous</span>
+            <% } %>
+
+            <% if (user && user.is_admin) { %>
+              <form action="/delete/<%= msg.id %>" method="POST" class="delete-form">
+                <button type="submit" class="delete-btn" onclick="return confirm('Delete this message?')">Delete</button>
+              </form>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,28 @@
+<%- include('partials/header', { title: 'Join the Club' }) %>
+
+<div class="container">
+  <div class="form-box">
+    <h1>Join the Club</h1>
+    <p>Got the secret passcode? Enter it below to become a full member and see who's behind each message.</p>
+
+    <% if (errors.length > 0) { %>
+      <ul class="error-list">
+        <% errors.forEach(e => { %>
+          <li><%= e.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <form action="/join" method="POST">
+      <div class="form-group">
+        <label for="passcode">Passcode</label>
+        <input type="password" id="passcode" name="passcode" placeholder="Enter the secret passcode" required>
+      </div>
+      <button type="submit" class="btn">Submit</button>
+    </form>
+
+    <p class="form-link"><a href="/">← Back to messages</a></p>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

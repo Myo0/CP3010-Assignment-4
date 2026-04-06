@@ -1,0 +1,31 @@
+<%- include('partials/header', { title: 'New Message' }) %>
+
+<div class="container">
+  <div class="form-box">
+    <h1>Post a Message</h1>
+
+    <% if (errors.length > 0) { %>
+      <ul class="error-list">
+        <% errors.forEach(e => { %>
+          <li><%= e.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <form action="/new-message" method="POST">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required>
+      </div>
+      <div class="form-group">
+        <label for="text">Message</label>
+        <textarea id="text" name="text" rows="6" required></textarea>
+      </div>
+      <button type="submit" class="btn">Post Message</button>
+    </form>
+
+    <p class="form-link"><a href="/">← Back to messages</a></p>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
